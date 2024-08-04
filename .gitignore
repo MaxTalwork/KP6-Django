@@ -1,0 +1,9 @@
+__pycache__/*.py
+venv/
+.env
+dist/
+*.egg-info/.coverage
+*.py,cover
+.cache/*.py,cover
+.ipynb_checkpoints
+.idea

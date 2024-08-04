@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "kp6 django"
+version = "0.1.0"
+description = ""
+authors = ["Maxim Talancev <maxtalwork@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+django = "^5.0.7"
+black = "^24.4.2"
+pillow = "^10.3.0"
+ipython = "^8.25.0"
+pytils = "^0.4.1"
+psycopg2 = "^2.9.9"
+python-dotenv = "^1.0.1"
+django-apscheduler = "^0.6.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
