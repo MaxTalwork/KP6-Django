@@ -1,10 +1,10 @@
 from django.urls import path
 
-from blogs.apps import BlogsConfig
-from blogs.views import (BlogPostListView, BlogPostCreateView, BlogPostDeleteView, BlogPostDetailView,
+from blog.apps import BlogConfig
+from blog.views import (BlogPostListView, BlogPostCreateView, BlogPostDeleteView, BlogPostDetailView,
                          BlogPostUpdateView, blog_main)
 
-app_name = BlogsConfig.name
+app_name = BlogConfig.name
 urlpatterns = [
     path('blog', blog_main, name='blogpost_main_page'),
     path('blogpost_list/', BlogPostListView.as_view(), name='blogpost_list'),

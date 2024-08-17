@@ -1,6 +1,6 @@
 from django.core.cache import cache
 
-from catalog.models import Product
+from mailing.models import Product
 from config.settings import CACHE_ENABLED
 
 

@@ -3,7 +3,7 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from pytils.translit import slugify
 
-from blogs.models import BlogPost
+from blog.models import BlogPost
 
 
 def blog_main(request):

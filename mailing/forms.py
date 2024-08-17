@@ -1,9 +1,9 @@
 from django.core.exceptions import ValidationError
 from django.forms import ModelForm, BooleanField
 
-from catalog.models import Product, Version
+from mailing.models import Product, Version
 
-forbidden_words = ['казино', 'криптовалюта', 'крипта', 'биржа', 'дешево', 'бесплатно', 'обман', 'полиция', 'радар']
+forbidden_words = []
 
 
 class StyleFormMixin(ModelForm):

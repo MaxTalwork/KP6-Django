@@ -5,9 +5,9 @@ from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
-from catalog.forms import ProdForm, VersionForm, ProdModerForm
-from catalog.models import Product, Version
-from catalog.services import get_prod_from_cache
+from mailing.forms import ProdForm, VersionForm, ProdModerForm
+from mailing.models import Product, Version
+from mailing.services import get_prod_from_cache
 
 
 def home(request):
