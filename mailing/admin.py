@@ -1,19 +1,48 @@
 from django.contrib import admin
-from mailing.models import Product, Category, Version
+from mailing.models import Mailing, Client, Message, Effort
 
 
-@admin.register(Product)
-class ProdAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'price', 'category')
-    list_filter = ('category',)
-    search_fields = ('name', 'description')
+@admin.register(Mailing)
+class MailingAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "message",
+        "send_date",
+        "created_at",
+        "status",
+        "periodicity",
+        "end_date",
+        "is_active",
+    )
+    list_filter = (
+        "client_list",
+        "send_date",
+        "status",
+        "periodicity",
+        "is_active",
+    )
+    search_fields = ("client_list",)
 
 
-@admin.register(Category)
-class CatAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name')
+@admin.register(Client)
+class ClientAdmin(admin.ModelAdmin):
+    list_display = ("id", "email", "client_name")
+    list_filter = ("email",)
+    search_fields = ("client_name",)
 
 
-@admin.register(Version)
-class VersionAdmin(admin.ModelAdmin):
-    list_display = ('product', 'version_number', 'version_name', 'current_version')
+@admin.register(Message)
+class MessageAdmin(admin.ModelAdmin):
+    list_display = ("id", "title", "letter_body")
+    list_filter = ("title",)
+    search_fields = ("title",)
+
+
+@admin.register(Effort)
+class EffortAdmin(admin.ModelAdmin):
+    list_display = ("id", "last_try", "status", "response", "mailing")
+    list_filter = (
+        "status",
+        "last_try",
+    )
+    search_fields = ("status",)

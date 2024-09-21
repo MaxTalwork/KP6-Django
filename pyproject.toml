@@ -15,6 +15,7 @@ pytils = "^0.4.1"
 psycopg2 = "^2.9.9"
 python-dotenv = "^1.0.1"
 django-apscheduler = "^0.6.2"
+nullable = "^0.2.0"
 
 
 [build-system]

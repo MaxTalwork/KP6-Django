@@ -1,8 +1,6 @@
 {% load static %}
 {% load my_tags %}
 <!doctype html>
-<html lang="ru" data-bs-theme="auto">
-  <head><script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=BonHaT0Y_pvysdTSuAFjGuHavTGrpMR3Luub0KyZ7ZAOAxDf2hcbwWOUaX5uU0KA4i_arS2ibf-iLj90OlcVR6ffxZFedyiq65xC6n9IkIY" charset="UTF-8"></script><script src="{% static 'admin/js/color-modes.js' %}"></script>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,7 +13,7 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
 
-<link rel="stylesheet" href="{% static 'admin/css/bootstrap.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
 
     <!-- Favicons -->
 <link rel="apple-touch-icon" href="/docs/5.3/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
@@ -162,7 +160,7 @@
 
 
 <header data-bs-theme="dark">
-{% include 'catalog/includes/inc_menu.html' %}
+{% include 'mailing/includes/inc_menu.html' %}
 </header>
 
 <main>
@@ -173,9 +171,9 @@
         <h1 class="fw-light">Список товаров</h1>
         <p class="lead text-body-secondary">Товары в магазине</p>
         <p>
-          <a href="/product_list/" class="btn btn-primary my-2">Перейти к списку товаров</a>
+          <a href="/mailing_list/" class="btn btn-primary my-2">Перейти к списку товаров</a>
           {% if user.is_authenticated %}
-          <a href="{% url 'catalog:product_create' %}" class="btn btn-secondary my-2">Создать товар</a>
+          <a href="{% url 'mailing:mailing_create' %}" class="btn btn-secondary my-2">Создать рассылку</a>
           {% endif %}
         </p>
       </div>

@@ -1,4 +1,4 @@
-{% extends 'catalog/main.html' %}
+{% extends 'mailing/main.html' %}
 {% load my_tags %}
 {% block content %}
 <div class="container">
@@ -6,12 +6,12 @@
     <div class="col-6">
       <form class="row" method="post" enctype="multipart/form-data">
         <div class="card">
-          <p class="card-text">Вы хотите удалить {{ object.name }}? </p>
+          <p class="card-text">Вы хотите удалить {{ object.email }}? </p>
           <div class="card-body">
             {% csrf_token %}
           </div>
           <button type="submit" class="btn btn-primary">Удалить</button>
-          <a class="btn btn-primary" href="{% url 'catalog:product_list' %}" role="button">Отмена</a>
+          <a class="btn btn-primary" href="{% url 'catalog:client_list' %}" role="button">Отмена</a>
         </div>
       </form>
     </div>

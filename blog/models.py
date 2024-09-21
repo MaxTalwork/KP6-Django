@@ -4,9 +4,7 @@ from django.db import models
 class BlogPost(models.Model):
     title = models.CharField(max_length=100, verbose_name="Заголовок")
     slug = models.SlugField(unique=True)
-    description = models.TextField(
-        verbose_name="содержимое", blank=True, null=True
-    )
+    description = models.TextField(verbose_name="содержимое", blank=True, null=True)
     preview = models.ImageField(
         upload_to="blog/image",
         blank=True,
@@ -16,14 +14,12 @@ class BlogPost(models.Model):
     created_at = models.DateField(
         auto_now_add=True, verbose_name="Дата создания (записи в БД)"
     )
-    publication = models.BooleanField(
-        verbose_name="Публикация поста"
-    )
+    publication = models.BooleanField(verbose_name="Публикация поста")
 
     views_counter = models.PositiveIntegerField(
         verbose_name="Счётчик просмотров",
-        help_text='Проказывает кол-во просмотров',
-        default=0
+        help_text="Проказывает кол-во просмотров",
+        default=0,
     )
 
     class Meta:

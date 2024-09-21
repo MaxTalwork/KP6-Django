@@ -3,108 +3,120 @@ from django.core.exceptions import PermissionDenied
 from django.forms import inlineformset_factory
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import (
+    ListView,
+    DetailView,
+    CreateView,
+    UpdateView,
+    DeleteView,
+)
 
-from mailing.forms import ProdForm, VersionForm, ProdModerForm
-from mailing.models import Product, Version
-from mailing.services import get_prod_from_cache
+from mailing.forms import MailingForm
+from mailing.models import Message, Client, Mailing
 
 
 def home(request):
-    return render(request, 'catalog/home.html')
+    return render(request, "mailing/home.html")
 
 
 def contacts(request):
-    return render(request, 'catalog/contacts.html')
+    return render(request, "mailing/contacts.html")
 
 
 def goods(request):
-    return render(request, 'catalog/goods.html')
+    return render(request, "mailing/goods.html")
 
 
-class ProductListView(ListView):
-    model = Product
-
-    def get_queryset(self):
-        return get_prod_from_cache()
-
-    def get_context_data(self, *args, **kwargs):
-        context_data = super().get_context_data(*args, **kwargs)
-        list_product = Product.objects.all()
-
-        for product in list_product:
-            version = Version.objects.filter(product=product)
-            activ_version = version.filter(current_version=True)
-            if activ_version:
-                product.active_version = activ_version.last().version_name
-                product.number_version = activ_version.last().version_number
-            else:
-                product.active_version = 'Нет активной версии'
-
-        context_data['object_list'] = list_product
-        return context_data
+class MessageCreateView(CreateView, LoginRequiredMixin):
+    model = Message
 
 
-class ProductDetailView(DetailView):
-    model = Product
-
-    def get_object(self, queryset=None):
-        self.object = super().get_object(queryset)
-        self.object.views_counter += 1
-        self.object.save()
-        return self.object
+class MessageListView(ListView):
+    model = Message
 
 
-class ProductCreateView(CreateView, LoginRequiredMixin):
-    model = Product
-    form_class = ProdForm
-    success_url = reverse_lazy('catalog:product_list')
+class MessageDetailView(DetailView):
+    model = Message
+
+
+class MessageUpdateView(LoginRequiredMixin, UpdateView):
+    model = Message
+    success_url = reverse_lazy("mailing:message_list")
+
+
+class MessageDeleteView(DeleteView):
+    model = Message
+    success_url = reverse_lazy("mailing:message_list")
+
+
+class ClientCreateView(CreateView, LoginRequiredMixin):
+    model = Client
+
+
+class ClientListView(ListView):
+    model = Client
+
+
+class ClientDetailView(DetailView):
+    model = Client
+
+
+class ClientUpdateView(LoginRequiredMixin, UpdateView):
+    model = Client
+    success_url = reverse_lazy("mailing:client_list")
+
+
+class ClientDeleteView(DeleteView):
+    model = Client
+    success_url = reverse_lazy("mailing:client_list")
+
+
+class MailingCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+    model = Mailing
+    form_class = MailingForm
+    permission_required = "mailing.add_mailing"
+    success_url = reverse_lazy("mailing:mailing_list")
 
     def form_valid(self, form):
-        product = form.save()
+        mailing = form.save()
         user = self.request.user
-        product.owner = user
-        product.save()
+        mailing.user = user
+        mailing.save()
         return super().form_valid(form)
 
 
-class ProductUpdateView(LoginRequiredMixin, UpdateView):
-    model = Product
-    form_class = ProdForm
-    success_url = reverse_lazy('catalog:product_list')
-
-    def get_form_class(self):
-        user = self.request.user
-        if user == self.object.owner:
-            return ProdForm
-        elif user.has_perm('catalog.can_edit_description'):
-            return ProdModerForm
-        raise PermissionDenied
-
-    def get_context_data(self, **kwargs):
-        context_data = super().get_context_data(**kwargs)
-        ProdFormset = inlineformset_factory(Product, Version, VersionForm, extra=1)
-        if self.request.method == 'POST':
-            context_data['formset'] = ProdFormset(self.request.POST, instance=self.object)
-        else:
-            context_data['formset'] = ProdFormset(instance=self.object)
-        return context_data
-
-    def form_valid(self, form):
-        context_data = self.get_context_data()
-        formset = context_data['formset']
-        if form.is_valid() and formset.is_valid():
-            self.object = form.save()
-            formset.instance = self.object
-            formset.save()
-            return super().form_valid(form)
-        else:
-            return self.render_to_response(self.get_context_data(form=form, formset=formset))
-
-    def get_success_url(self):
-        return reverse('catalog:product', args=[self.kwargs.get('pk')])
+class MailingUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    model = Mailing
+    form_class = MailingForm
+    permission_required = "mailing.change_mailing"
+    success_url = reverse_lazy("mailing:mailing_list")
 
 
-class ProductDeleteView(DeleteView):
-    model = Product
-    success_url = reverse_lazy('catalog:product_list')
+class MailingListView(LoginRequiredMixin, ListView):
+    model = Mailing
+    # permission_required = 'mailing.view_mailing'
+
+    # def get_context(self, request):
+    #     context = super(LivreDesc, self).get_context(request)
+    #     context['nb_livres'] = LivreDesc.objects.all().count()
+    #     return context
+
+    # def get_context_data(self, *args, **kwargs):
+    #     context_data = super().get_context_data(*args, **kwargs)
+    #     for mailing in context_data['mailing_list']:
+    #         active_version = Mailing.objects.filter(is_active=True)
+    #         if active_version:
+    #             mailing.active_version = active_version.last().name_version
+    #         else:
+    #             product.active_version = 'Отсутствует'
+    #     return context_data
+
+
+class MailingDetailView(LoginRequiredMixin, DetailView):
+    model = Mailing
+
+
+class MailingDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+    model = Mailing
+    permission_required = "mailing.delete_mailing"
+    success_url = reverse_lazy("mailing:mailing_list")
