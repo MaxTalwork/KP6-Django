@@ -1,0 +1,34 @@
+{% extends 'blog/blogpost_list.html' %}
+{% load my_tags %}
+
+{% block content %}
+<div class="row text-center">
+    <div class="col-3">
+        <li>Количество рассылок - {{ number_mailing }}</li>
+        <li>Количество активных рассылок - {{ number_of_active_mailing }}</li>
+        <li>Уникальные клиенты рассылок - {{ number_customer }}</li>
+    </div>
+</div>
+<div class="row text-center">
+{% for blog in object_list %}
+    {% if blog.pk == first_record or blog.pk == second_record or blog.pk == third_record %}
+    <div class="col-3">
+        <div class="card mb-4 box-shadow">
+            <div class="card-header">
+                <img src="{{ blog.picture | media_filter }}" width="200" height="160">
+                <h4 class="my-0 font-weight-normal">{{ blog.heading }}</h4>
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled mt-3 mb-4 text-start m-3">
+                    <li>{{ blog.content_of_article }}</li>
+                    <li>{{ blog.number_of_views }}</li>
+                    <li>{{ blog.date_of_publication }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+</div>
+{% endblock %}
+

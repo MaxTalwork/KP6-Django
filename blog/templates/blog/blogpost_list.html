@@ -1,4 +1,4 @@
-{% extends 'blogs/blogpost_main_page.html' %}
+{% extends 'mailing/main.html' %}
 {% load my_tags %}
 {% block content %}
 <div class="album py-5 bg-body-tertiary">
@@ -12,9 +12,9 @@
               <p class="card-text">{{ post.title | truncatechars:100 }} </p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                  <a class="btn btn-primary" href="{% url 'blogs:post' post.pk %}" role="button">Подробная информация</a>
-                  <a class="btn btn-primary" href="{% url 'blogs:blogpost_update' post.pk %}" role="button">Редактировать</a>
-                  <a class="btn btn-primary" href="{% url 'blogs:blogpost_delete' post.pk %}" role="button">Удалить</a>
+                  <a class="btn btn-primary" href="{% url 'blog:post' post.pk %}" role="button">Подробная информация</a>
+                  <a class="btn btn-primary" href="{% url 'blog:blogpost_update' post.pk %}" role="button">Редактировать</a>
+                  <a class="btn btn-primary" href="{% url 'blog:blogpost_delete' post.pk %}" role="button">Удалить</a>
                 </div>
 
               </div>

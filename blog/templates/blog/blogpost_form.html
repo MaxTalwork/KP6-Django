@@ -1,4 +1,4 @@
-{% extends 'blogs/blogpost_main_page.html' %}
+{% extends 'blog/blogpost_main_page.html' %}
 {% load my_tags %}
 {% block content %}
 <div class="container">
@@ -6,12 +6,17 @@
     <div class="col-6">
       <form class="row" method="post" enctype="multipart/form-data">
         <div class="card">
-          <p class="card-text">Вы хотите удалить {{ object.name }}? </p>
           <div class="card-body">
             {% csrf_token %}
+            {{ form.as_p }}
           </div>
-          <button type="submit" class="btn btn-primary">Удалить</button>
-          <a class="btn btn-primary" href="{% url 'blogs:blogpost_list' %}" role="button">Отмена</a>
+          <button type="submit" class="btn btn-primary">
+            {% if object %}
+            Сохранить
+            {% else %}
+            Создать
+            {% endif %}
+          </button>
         </div>
       </form>
     </div>

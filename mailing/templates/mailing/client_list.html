@@ -14,11 +14,11 @@
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
                     {% if user == client.owner %}
-                    <a class="btn btn-primary" href="{% url 'catalog:client_update' client.pk %}" role="button">Редактировать</a>
+                    <a class="btn btn-primary" href="{% url 'mailing:client_update' client.pk %}" role="button">Редактировать</a>
                     {% endif %}
-                  <a class="btn btn-primary" href="{% url 'catalog:client' client.pk %}" role="button">Подробная информация</a>
+                  <a class="btn btn-primary" href="{% url 'mailing:client' client.pk %}" role="button">Подробная информация</a>
 
-                  <a class="btn btn-primary" href="{% url 'catalog:client_delete' client.pk %}" role="button">Удалить</a>
+                  <a class="btn btn-primary" href="{% url 'mailing:client_delete' client.pk %}" role="button">Удалить</a>
                 </div>
               </div>
             </div>

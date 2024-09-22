@@ -11,7 +11,7 @@ from django.views.generic import (
     DeleteView,
 )
 
-from mailing.forms import MailingForm
+from mailing.forms import MailingForm, ClientForm, MessageForm
 from mailing.models import Message, Client, Mailing
 
 
@@ -23,12 +23,10 @@ def contacts(request):
     return render(request, "mailing/contacts.html")
 
 
-def goods(request):
-    return render(request, "mailing/goods.html")
-
-
 class MessageCreateView(CreateView, LoginRequiredMixin):
     model = Message
+    form_class = MessageForm
+    success_url = reverse_lazy("mailing:message_list")
 
 
 class MessageListView(ListView):
@@ -41,16 +39,20 @@ class MessageDetailView(DetailView):
 
 class MessageUpdateView(LoginRequiredMixin, UpdateView):
     model = Message
+    form_class = MessageForm
     success_url = reverse_lazy("mailing:message_list")
 
 
 class MessageDeleteView(DeleteView):
     model = Message
+    form_class = MessageForm
     success_url = reverse_lazy("mailing:message_list")
 
 
 class ClientCreateView(CreateView, LoginRequiredMixin):
     model = Client
+    form_class = ClientForm
+    success_url = reverse_lazy("mailing:client_list")
 
 
 class ClientListView(ListView):
@@ -59,10 +61,12 @@ class ClientListView(ListView):
 
 class ClientDetailView(DetailView):
     model = Client
+    form_class = ClientForm
 
 
 class ClientUpdateView(LoginRequiredMixin, UpdateView):
     model = Client
+    form_class = ClientForm
     success_url = reverse_lazy("mailing:client_list")
 
 
@@ -114,6 +118,7 @@ class MailingListView(LoginRequiredMixin, ListView):
 
 class MailingDetailView(LoginRequiredMixin, DetailView):
     model = Mailing
+    form_class = MailingForm
 
 
 class MailingDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
